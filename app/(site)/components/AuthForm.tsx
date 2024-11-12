@@ -1,7 +1,6 @@
 "use client";
 
-import Button from "@/app/components/Button";
-import Input from "@/app/components/inputs/Input";
+
 import { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
@@ -10,6 +9,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Button from "../../components/Button";
+import Input from "../../components/inputs/Input";
 
 type Variant= "LOGIN" | "REGISTER";
 
