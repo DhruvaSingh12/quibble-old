@@ -9,7 +9,17 @@ export async function POST(request: Request) {
         const { name, email, password } = body;
 
         if(!email || !name || !password){
-            return NextResponse.json("Missing Fields", { status: 400 });
+            return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+        }
+
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+
+        if (existingUser) {
+            return NextResponse.json({ error: "User already exists" }, { status: 400 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -22,10 +32,10 @@ export async function POST(request: Request) {
             }
         });
 
-        return NextResponse.json(user);
+        return NextResponse.json({ id: user.id, name: user.name, email: user.email });
     } 
     catch (error: any) {
-        console.error(error, 'REGISTRATION_ERROR');
-        return new NextResponse("Something went wrong", { status: 500 });
+        console.error('REGISTRATION_ERROR:', error);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 }

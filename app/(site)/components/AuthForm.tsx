@@ -40,9 +40,7 @@ const AuthForm = () => {
             email: '',
             password: '',
         }
-    });
-
-    const onSubmit : SubmitHandler<FieldValues> = (data) => {
+    });    const onSubmit : SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
         if(variant === "LOGIN")
         {
@@ -60,20 +58,19 @@ const AuthForm = () => {
             })
             .finally(() => setIsLoading(false));
         }
-        if(variant === "REGISTER")
+        else if(variant === "REGISTER")
         {
             axios.post('/api/register', data)
             .then(() => {
-                toast.success("Account created.")
+                toast.success("Account created successfully!")
                 toggleVariant();
             })
             .then(() => signIn('credentials',data))
-            .catch(() => toast.error("Something isn't right."))
+            .catch((error) => {
+                console.error('Registration error:', error);
+                toast.error("Something went wrong during registration.")
+            })
             .finally(() => setIsLoading(false));
-        }
-        else 
-        {
-
         }
     }
 

@@ -20,9 +20,6 @@ export default function Home() {
            className="mx-auto w-auto"
            src="/images/logo.png"
         />
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Log in to your account or create a new account. 
-        </h2>
         <AuthForm />
       </div>
       
